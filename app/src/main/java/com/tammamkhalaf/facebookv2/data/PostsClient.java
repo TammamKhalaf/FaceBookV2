@@ -2,6 +2,7 @@ package com.tammamkhalaf.facebookv2.data;
 
 import com.tammamkhalaf.facebookv2.pojo.PostModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +33,7 @@ public class PostsClient {
         return postInterface.getPosts();
     }
 
-    public Call<PostModel> storePost(PostModel postModel){
-        return postInterface.storePost(postModel);
+    public Call<PostModel> storePost(HashMap<Object,Object> myMapOfObjects){
+        return postInterface.storePost(myMapOfObjects);
     }
 }

@@ -2,6 +2,7 @@ package com.tammamkhalaf.facebookv2.data;
 
 import com.tammamkhalaf.facebookv2.pojo.PostModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,6 +14,10 @@ public interface PostInterface {
     @GET("posts")
     Call<List<PostModel>> getPosts();
 
+    /**
+     *
+     * */
+    //todo if you want to send multiple object to the server / rest api
     @POST("posts")
-    Call<PostModel> storePost(@Body PostModel postModel);
+    Call<PostModel> storePost(@Body HashMap<Object,Object> map);
 }
