@@ -4,15 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_margin="8dp"
+        android:background="#4CAF50"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/titleTV"
-            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:singleLine="false"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -21,6 +27,7 @@
 
         <TextView
             android:id="@+id/bodyTV"
+            android:textColor="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="24dp"
@@ -33,6 +40,7 @@
 
         <TextView
             android:id="@+id/userIdTV"
+            android:textColor="#FFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
