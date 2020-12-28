@@ -1,10 +1,25 @@
 package com.tammamkhalaf.facebookv2.pojo;
 
+import java.util.List;
+
 public class PostModel {
     private int userId;
     private int id;
     private String title;
     private String body;
+
+    public PostModel(int userId, int id, String title, String body) {
+        this.userId = userId;
+        this.id = id;
+        this.title = title;
+        this.body = body;
+    }
+
+    public PostModel(int userId, String title, String body) {
+        this.userId = userId;
+        this.title = title;
+        this.body = body;
+    }
 
     public int getUserId() {
         return userId;
@@ -25,7 +40,6 @@ public class PostModel {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }

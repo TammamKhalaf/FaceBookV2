@@ -3,6 +3,7 @@ package com.tammamkhalaf.facebookv2.ui.main;
 import com.tammamkhalaf.facebookv2.data.PostsClient;
 import com.tammamkhalaf.facebookv2.pojo.PostModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +15,8 @@ import retrofit2.Response;
 public class PostViewModel extends ViewModel {
     MutableLiveData<List<PostModel>> postsMutableLiveData = new MutableLiveData<>();
 
+    MutableLiveData<PostModel> postMutableLiveData = new MutableLiveData<>();
+
     public void getPosts(){
         PostsClient.getINSTANCE().getPosts().enqueue(new Callback<List<PostModel>>() {
             @Override
@@ -23,6 +26,21 @@ public class PostViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<List<PostModel>> call, Throwable t) {
+            }
+        });
+    }
+
+
+    public void storePost(PostModel postModel){
+        PostsClient.getINSTANCE().storePost(postModel).enqueue(new Callback<PostModel>() {
+            @Override
+            public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                postMutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PostModel> call, Throwable t) {
+
             }
         });
     }

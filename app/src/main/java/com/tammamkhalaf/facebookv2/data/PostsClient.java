@@ -31,4 +31,8 @@ public class PostsClient {
     public Call<List<PostModel>> getPosts(){
         return postInterface.getPosts();
     }
+
+    public Call<PostModel> storePost(PostModel postModel){
+        return postInterface.storePost(postModel);
+    }
 }
