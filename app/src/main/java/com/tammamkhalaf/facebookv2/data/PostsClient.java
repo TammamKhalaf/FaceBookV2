@@ -5,8 +5,10 @@ import com.tammamkhalaf.facebookv2.pojo.PostModel;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit2.Call;
+
+import io.reactivex.Single;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostsClient {
@@ -18,6 +20,7 @@ public class PostsClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         postInterface = retrofit.create(PostInterface.class);
     }
@@ -29,11 +32,11 @@ public class PostsClient {
         return INSTANCE;
     }
 
-    public Call<List<PostModel>> getPosts(){
+    public Single<List<PostModel>> getPosts(){
         return postInterface.getPosts();
     }
 
-    public Call<PostModel> storePost(HashMap<Object,Object> myMapOfObjects){
-        return postInterface.storePost(myMapOfObjects);
-    }
+            public Single<PostModel> storePost(HashMap<Object,Object> myMapOfObjects){
+                return postInterface.storePost(myMapOfObjects);
+            }
 }

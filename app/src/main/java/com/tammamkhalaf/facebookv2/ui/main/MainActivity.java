@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         //        PostModel newPost = new PostModel(789,"this is my fake post title","this is body of the post i have created");
 
         //multiple objects to send to the api or server
-        HashMap<Object, Object> map = new HashMap<>();
-        map.put("title", "tammam khalaf");
-        map.put("userId", 10);
-        map.put("body", "this is the body of my post");
+                HashMap<Object, Object> map = new HashMap<>();
+                map.put("title", "tammam khalaf");
+                map.put("userId", 10);
+                map.put("body", "this is the body of my post");
 
         postViewModel.storePost(map);
 
@@ -47,20 +46,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        postViewModel.postsMutableLiveData.observe(this, new Observer<List<PostModel>>() {
-            @Override
-            public void onChanged(List<PostModel> postModels) {
-                PostModelList = postModels;
-                adapter.setList(PostModelList);
-            }
+        postViewModel.postsMutableLiveData.observe(this, postModels -> {
+            PostModelList = postModels;
+            adapter.setList(PostModelList);
         });
 
-        postViewModel.postMutableLiveData.observe(this, new Observer<PostModel>() {
-            @Override
-            public void onChanged(PostModel postModel) {
-                PostModelList.add(1,postModel);
-                adapter.setList(PostModelList);
-            }
+        postViewModel.postMutableLiveData.observe(this, postModel -> {
+            PostModelList.add(1,postModel);
+            adapter.setList(PostModelList);
         });
 
     }

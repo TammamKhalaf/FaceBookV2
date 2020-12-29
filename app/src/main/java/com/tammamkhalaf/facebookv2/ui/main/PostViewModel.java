@@ -1,48 +1,47 @@
 package com.tammamkhalaf.facebookv2.ui.main;
 
+import android.util.Log;
+
 import com.tammamkhalaf.facebookv2.data.PostsClient;
 import com.tammamkhalaf.facebookv2.pojo.PostModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import io.reactivex.Single;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class PostViewModel extends ViewModel {
+
+    private static final String TAG = "PostViewModel";
+    
     MutableLiveData<List<PostModel>> postsMutableLiveData = new MutableLiveData<>();
 
     MutableLiveData<PostModel> postMutableLiveData = new MutableLiveData<>();
 
-    public void getPosts(){
-        PostsClient.getINSTANCE().getPosts().enqueue(new Callback<List<PostModel>>() {
-            @Override
-            public void onResponse(Call<List<PostModel>> call, Response<List<PostModel>> response) {
-                postsMutableLiveData.setValue(response.body());
-            }
+    public void getPosts() {
+        Single<List<PostModel>> singleObservable =
+                PostsClient.getINSTANCE().getPosts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-            @Override
-            public void onFailure(Call<List<PostModel>> call, Throwable t) {
-            }
-        });
+        singleObservable.subscribe(o->postsMutableLiveData.setValue(o),e-> Log.d(TAG, "getPosts: "+e.getLocalizedMessage()));
     }
 
 
     public void storePost(HashMap<Object,Object> mapOfObjectsToSend){
-        PostsClient.getINSTANCE().storePost(mapOfObjectsToSend).enqueue(new Callback<PostModel>() {
-            @Override
-            public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                postMutableLiveData.setValue(response.body());
-            }
+        Single<PostModel> postToSend =
+                     PostsClient.getINSTANCE()
+                     .storePost(mapOfObjectsToSend)
+                             .subscribeOn(Schedulers.io())
+                     .observeOn(AndroidSchedulers.mainThread());
 
-            @Override
-            public void onFailure(Call<PostModel> call, Throwable t) {
+        postToSend.subscribe(k->postMutableLiveData.setValue(k),e-> Log.d(TAG, "storePost: "+e.getLocalizedMessage()));
 
-            }
-        });
     }
 }
